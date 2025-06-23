@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Flowers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a0845);
+      color: #fbeaff;
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .greetings {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-bottom: 2rem;
+    }
+
+    .letter {
+      font-size: clamp(1.5rem, 5vw, 3.5rem);
+      font-weight: bold;
+      opacity: 0;
+      transform: scale(0.6) translateY(20px);
+      transition: all 0.5s ease-in-out;
+      color: #f9d8ff;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .from-left {
+      transform: translateX(-150px) scale(0.6);
+    }
+
+    .from-right {
+      transform: translateX(150px) scale(0.6);
+    }
+
+    .appear {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    .disappear {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.8);
+    }
+
+    .description {
+      font-size: 1.2rem;
+      color: #ffffffcc;
+      margin-top: 1.5rem;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .description.show {
+      opacity: 1;
+    }
+
+    .button {
+      margin-top: 2rem;
+    }
+
+    .button a {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      background: linear-gradient(90deg, #ff8ae2, #b18bff);
+      color: white;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .button a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* 📱 Mobile optimization */
+    @media (max-width: 480px) {
+      .greetings {
+        gap: 0.3em;
+      }
+      .description {
+        font-size: 1rem;
+      }
+      .button a {
+        font-size: 1rem;
+        padding: 0.7rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="greetings" id="greetings">
+      <span class="letter from-left">T</span>
+      <span class="letter from-right">I</span>
+      <span class="letter from-left">A</span>
+      <span class="letter from-right">N</span>
+      <span class="letter from-left">U</span>
+      <span class="letter from-right">R</span>
+      <span class="letter from-left">F</span>
+      <span class="letter from-right">A</span>
+      <span class="letter from-left">D</span>
+      <span class="letter from-right">I</span>
+      <span class="letter from-left">L</span>
+      <span class="letter from-right">L</span>
+      <span class="letter from-left">A</span>
+      <span class="letter from-right">H</span>
+    </div>
+
+    <div class="description" id="desc">
+      ✨ Aku ada hadiah spesial buat kamu! 🌸
+    </div>
+
+    <div class="button">
+      <a href="flower.html">🌷 Klik di sini 🌷</a>
+    </div>
+  </div>
+
+  <script>
+    const letters = document.querySelectorAll('.letter');
+    const desc = document.getElementById('desc');
+
+    function animateLetters(index = 0) {
+      if (index < letters.length) {
+        const letter = letters[index];
+        letter.classList.add('appear');
+        setTimeout(() => {
+          letter.classList.remove('appear');
+          letter.classList.add('disappear');
+        }, 1000);
+        setTimeout(() => {
+          animateLetters(index + 1);
+        }, 200);
+      } else {
+        setTimeout(() => {
+          desc.classList.add('show');
+        }, 500);
+
+        setTimeout(() => {
+          desc.classList.remove('show');
+          resetLetters();
+        }, 3000);
+      }
+    }
+
+    function resetLetters() {
+      letters.forEach((letter, i) => {
+        letter.classList.remove('appear', 'disappear');
+        if (i % 2 === 0) {
+          letter.classList.add('from-left');
+        } else {
+          letter.classList.add('from-right');
+        }
+      });
+
+      setTimeout(() => {
+        animateLetters();
+      }, 1000);
+    }
+
+    animateLetters();
+  </script>
+</body>
+</html>
